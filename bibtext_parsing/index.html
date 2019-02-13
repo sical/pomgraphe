@@ -31,20 +31,17 @@
   var width = 640,
       height = 480;
 
-  var links = [
-    {source: 'Romain Vuillemot', target: 'Richard Alligier'},
-    {source: 'Romain Vuillemot',target: 'Maxime Cordeil'},
-    {source: 'Romain Vuillemot',target: 'Steven M.Drucker'},
-    {source: 'Romain Vuillemot', target: 'Nathalie Henry Riche'},
-    {source: 'Romain Vuillemot',target:'Christophe Hurter'}
-  ];
+//   var links = [
+//     {source: 'Romain Vuillemot', target: 'Richard Alligier'},
+//     {source: 'Romain Vuillemot',target: 'Maxime Cordeil'},
+//     {source: 'Romain Vuillemot',target: 'Steven M.Drucker'},
+//     {source: 'Romain Vuillemot', target: 'Nathalie Henry Riche'},
+//     {source: 'Romain Vuillemot',target:'Christophe Hurter'}
+//   ];
 
-// var links = [
-// { source: 'Baratheon', target:'Lannister' },
-// { source: 'Baratheon', target:'Stark' },
-// { source: 'Lannister', target:'Stark' },
-// { source: 'Stark', target:'Bolton' }
-// ];
+    var links = d3.json("test.json", function(data) {
+        alert(data.length)
+    });
 
     // create empty nodes array
     var nodes = {};
