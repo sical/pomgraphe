@@ -28,6 +28,7 @@
 <!-- <script src="plot.js"></script>
 <script>selectableForceDirectedGraph();</script> -->
 <script>
+	 var data;
   var width = 640,
       height = 480;
 
@@ -39,15 +40,16 @@
 //     {source: 'Romain Vuillemot',target:'Christophe Hurter'}
 //   ];
 
-    var links = d3.json("test.json", function(data) {
-        alert(data.length)
-    });
+    var links = d3.json("test.json", function(d) {
+        alert(d.length)
+		data = d ;
+    
 
     // create empty nodes array
     var nodes = {};
     
     // compute nodes from links data
-    links.forEach(function(link) {
+    data.forEach(function(link) {
         link.source = nodes[link.source] ||
             (nodes[link.source] = {name: link.source});
         link.target = nodes[link.target] ||
@@ -81,7 +83,7 @@
         .attr('class', 'node')
         .attr('r', width * 0.03); //radius of circle
 
-
+});
     function tick(e) {
         
         node.attr('cx', function(d) { return d.x; })
