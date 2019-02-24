@@ -23,14 +23,25 @@
 
 </style>
 <body>
+
+    <form method="post" action="">
+        <p class="titre">Auteur</p>
+        <fieldset id="Auteur">
+        <input type="text" id="name" name="user_name">
+        </fieldset>
+        <p class="titre">nombre d'articles</p>
+        <fieldset id="nb">
+        <input type="text" id="name" name="user_name">
+        </fieldset>
+    </form>
     <!-- <div align='center' id="d3_selectable_force_directed_graph"></div> -->
 <script src="http://d3js.org/d3.v3.min.js"></script>
 <!-- <script src="plot.js"></script>
 <script>selectableForceDirectedGraph();</script> -->
 <script>
-	 var data;
-  var width = 640,
-      height = 480;
+	var data;
+    var width = 900,
+    height = 800;
 
 //   var links = [
 //     {source: 'Romain Vuillemot', target: 'Richard Alligier'},
@@ -83,7 +94,7 @@
         .attr('class', 'node')
         .attr('r', width * 0.03); //radius of circle
 
-});
+
     function tick(e) {
         
         node.attr('cx', function(d) { return d.x; })
@@ -96,5 +107,5 @@
             .attr('y2', function(d) { return d.target.y; });
         
     }
-
+});
 </script>
