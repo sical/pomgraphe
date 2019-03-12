@@ -24,8 +24,8 @@
 </style>
 <body>
 
-    <form method="post" action="">
-        <p class="titre">Auteur</p>
+    <form id="form" method="post" action="">
+        <p id="auteur" class="titre">Auteur</p>
         <fieldset id="Auteur">
         <input type="text" id="name" name="user_name">
         </fieldset>
@@ -93,11 +93,14 @@ d3.json("test.json", function(error, graph) {
 
   var node = svg.selectAll(".node")
       .data(graph.nodes)
-    .enter().append("circle")
+      .enter().append("circle")
       .attr("class", "node")
       .attr("r", 6)
+      .on("click", mouseover)
+      .on("mouseout", mouseout)
       .style("fill", function(d) { return d.id; })
       .call(force.drag);
+
 
   force.on("tick", function() {
     link.attr("x1", function(d) { return d.source.x; })
@@ -107,6 +110,21 @@ d3.json("test.json", function(error, graph) {
 
     node.attr("cx", function(d) { return d.x; })
         .attr("cy", function(d) { return d.y; });
+    
   });
+
+  function mouseover() {
+    document.getElementById("autheur").innerHTML = this;
+      d3.select(this).select("circle").transition()
+          .duration(750)
+          .attr("r", 16);
+  }
+
+  function mouseout() {
+      d3.select(this).select("circle").transition()
+          .duration(750)
+          .attr("r", 8);
+  }
+
 });
 </script>
