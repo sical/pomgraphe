@@ -100,7 +100,8 @@ d3.json("test.json", function(error, graph) {
       .on("mouseout", mouseout)
       .style("fill", function(d) { return d.id; })
       .call(force.drag);
-
+  node.append("title")
+      .text(function (d) {return d.id;});
 
   force.on("tick", function() {
     link.attr("x1", function(d) { return d.source.x; })
