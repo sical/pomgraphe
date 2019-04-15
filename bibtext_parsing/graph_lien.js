@@ -1,5 +1,5 @@
-var width = 1500,
-    height = 1000;
+var width = 700,
+    height = 700;
 
    var BLEABLEA = [
      {source: 'Romain Vuillemot', target: 'Richard Alligier', group: "1"},
@@ -22,7 +22,7 @@ var width = 1500,
     .linkDistance(40)
     .size([width, height]);
 
-var svg = d3.select("body").append("svg")
+var svg = d3.select("#chartline1").append("svg")
     .attr("width", width)
     .attr("height", height);
 
@@ -60,7 +60,7 @@ d3.json("bibtext_parsing/test.json", function(error, graph) {
       .style("fill", function(d) { return d.id; })
       .call(force.drag);
   node.append("title")
-      .text(function (d) {return d.id;});
+      .text(function (d) { return d.id;});
 
   force.on("tick", function() {
     link.attr("x1", function(d) { return d.source.x; })
@@ -74,7 +74,7 @@ d3.json("bibtext_parsing/test.json", function(error, graph) {
   });
 
   function mouseover() {
-    document.getElementById("autheur").innerHTML = this;
+    // document.getElementById("autheur").value = this;
       d3.select(this).select("circle").transition()
           .duration(750)
           .attr("r", 16);
