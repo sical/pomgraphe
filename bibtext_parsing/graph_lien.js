@@ -1,4 +1,4 @@
-var width = 1500,
+var width = 1250,
     height = 1100;
 var auteur = document.cookie;
 
@@ -78,6 +78,7 @@ d3.json("bibtext_parsing/test.json", function(error, graph) {
       .on("mouseout", mouseout)
       .attr("fill",function(d){
           if(auteur == d.id){
+              document.getElementById('auteur_name').innerHTML = auteur + " nombre de d'articles co-écrits: " + d.nbLinks +" et la derniére collaboration: " + d.lastColaboration ;
               return color3(d);
           }else{
           return color(d.group);}
