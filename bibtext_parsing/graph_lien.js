@@ -1,5 +1,18 @@
-var width = 700,
-    height = 700;
+var width = 1500,
+    height = 1100;
+var auteur = document.cookie;
+
+
+function recherche(nForm) {
+    alert(nForm.auteur.value);
+    auteur = nForm.auteur.value;
+    document.cookie = auteur;
+    document.location.reload(true);
+}
+
+function delete_cookie( name ) {
+    document.cookie = name + 'ppkcookie2=encore un autre test; expires=Fri, 01 Jan 2010 00:0:00 UTC; path=/';
+  }
 
    var BLEABLEA = [
      {source: 'Romain Vuillemot', target: 'Richard Alligier', group: "1"},
@@ -18,13 +31,17 @@ var width = 700,
     // });
 
  var force = d3.layout.force()
-    .charge(-200)
-    .linkDistance(40)
+    .charge(-90)
+    .linkDistance(60)
     .size([width, height]);
 
 var svg = d3.select("#chartline1").append("svg")
     .attr("width", width)
     .attr("height", height);
+
+var color = d3.scale.category10();
+var color2  = d3.scale.category20();
+var color3 = d3.scale.category20b();
 
 d3.json("bibtext_parsing/test.json", function(error, graph) {
   if (error) throw error;
@@ -48,7 +65,9 @@ d3.json("bibtext_parsing/test.json", function(error, graph) {
   var link = svg.selectAll(".link")
       .data(graph.links)
     .enter().append("line")
-      .attr("class", "link");
+      .attr("class", "link")
+      .attr("stroke-width", function(d){return d.nbLinks/3;})
+      .attr("opacity",function(d){return d.lastColaboration;}); // Pour demain
 
   var node = svg.selectAll(".node")
       .data(graph.nodes)
@@ -57,6 +76,12 @@ d3.json("bibtext_parsing/test.json", function(error, graph) {
       .attr("r", 6)
       .on("click", mouseover)
       .on("mouseout", mouseout)
+      .attr("fill",function(d){
+          if(auteur == d.id){
+              return color3(d);
+          }else{
+          return color(d.group);}
+        })
       .style("fill", function(d) { return d.id; })
       .call(force.drag);
   node.append("title")
@@ -85,5 +110,6 @@ d3.json("bibtext_parsing/test.json", function(error, graph) {
           .duration(750)
           .attr("r", 8);
   }
-
+ 
 });
+delete_cookie(auteur);
