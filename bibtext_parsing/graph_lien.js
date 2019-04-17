@@ -1,13 +1,12 @@
 var width = 1250,
     height = 1100;
-var auteur = document.cookie;
+var auteur = "";
 
 
 function recherche(nForm) {
-    alert(nForm.auteur.value);
-    auteur = nForm.auteur.value;
-    document.cookie = auteur;
-    document.location.reload(true);
+    auteur = $('#auteur').val();
+    alert(auteur);
+    d3.selectAll(".node[name_node='"+auteur+"']").attr("class","node sel");
 }
 
 function delete_cookie( name ) {
@@ -67,18 +66,20 @@ d3.json("bibtext_parsing/test.json", function(error, graph) {
     .enter().append("line")
       .attr("class", "link")
       .attr("stroke-width", function(d){return d.nbLinks/3;})
-      .attr("opacity",function(d){return d.lastColaboration;}); // Pour demain
+      .attr("opacity",function(d){
+          return d.lastColaboration;}); // Pour demain
 
   var node = svg.selectAll(".node")
       .data(graph.nodes)
       .enter().append("circle")
       .attr("class", "node")
+      .attr("name_node",function(d){return d.id;})
       .attr("r", 6)
       .on("click", mouseover)
       .on("mouseout", mouseout)
       .attr("fill",function(d){
           if(auteur == d.id){
-              document.getElementById('auteur_name').innerHTML = auteur + " nombre de d'articles co-écrits: " + d.nbLinks +" et la derniére collaboration: " + d.lastColaboration ;
+            //   document.getElementById('auteur_name').innerHTML = auteur + " nombre de d'articles co-écrits: " + d.nbLinks +" et la derniére collaboration: " + d.lastColaboration ;
               return color3(d);
           }else{
           return color(d.group);}
