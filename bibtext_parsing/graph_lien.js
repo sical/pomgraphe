@@ -1,6 +1,7 @@
 var width = 1250,
     height = 1100;
 var auteur = "";
+var year ;
 
 
 function recherche(nForm) {
@@ -8,6 +9,17 @@ function recherche(nForm) {
     alert(auteur);
     d3.selectAll(".node[name_node='"+auteur+"']").attr("class","node sel");
 }
+
+function sort_year(form){
+    year = $('#datetimepicker1').val();
+    alert(year);
+}
+
+document.querySelector("select").addEventListener("change", function (){
+    alert(this.value);
+    year=this.value;
+    d3.selectAll(".link[last='"+year+"']").attr("class","link link2");
+}, false);
 
 function delete_cookie( name ) {
     document.cookie = name + 'ppkcookie2=encore un autre test; expires=Fri, 01 Jan 2010 00:0:00 UTC; path=/';
@@ -65,20 +77,18 @@ d3.json("bibtext_parsing/test.json", function(error, graph) {
       .data(graph.links)
     .enter().append("line")
       .attr("class", "link")
+      .attr("last",function(d){return d.lastColaboration;})
       .attr("stroke-width", function(d){return d.nbLinks/3;})
       .attr("opacity",function(d){
         //    d = ((d.lastColaboration-2000)/10)-1;
         //     console.log(d);
             if( d.lastColaboration >= 2017 ){
-                console.log(d.lastColaboration + "nom avec plus de 0.8");
                 return 1;
             }
             if (d.lastColaboration >= 2015) {
-                console.log(d.lastColaboration + "nom avec plus de 0.6");
                 return 0.5;
             }
             if (d.lastColaboration <= 2014 ){
-                console.log(d.lastColaboration + "other");
                 return 0.2;
             }
             }); // Pour demain
