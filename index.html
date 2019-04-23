@@ -1,37 +1,9 @@
 <!DOCTYPE html>
 <html lang="fr">
 <meta charset="utf-8">
-<style>
-.node {
-  stroke: #fff;
-  stroke-width: 1.5px;
-}
-
-.node .selected {
-  stroke: black;
-}
-
-.link {
-  stroke: #999;
-}
-
-.link2 {
-  stroke: #008000;
-}
-
-.sel {
-  fill:red;
-}
-
-.brush .extent {
-  fill-opacity: .1;
-  stroke: #fff;
-  shape-rendering: crispEdges;
-}
-</style>
 
 <head>
-
+    <link rel="stylesheet" type="text/css" href="css/style.css">
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -83,7 +55,7 @@
         </div>
 
       <div id='clear'>
-        <input type="submit" value="clear" id='clear' onclick="document.location.reload(true)">
+        <input type="submit" value="clear" id='clear' onclick="document.location.reload(true)" class="btn btn-primary">
       </div>  
         <!-- Navbar Search -->
         <form class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0", name="auteur" , onSubmit="recherche(this)">

@@ -1,0 +1,26 @@
+.node {
+    stroke: #fff;
+    stroke-width: 1.5px;
+  }
+  
+  .node .selected {
+    stroke: black;
+  }
+  
+  .link {
+    stroke: #999;
+  }
+  
+  .link2 {
+    stroke: #008000;
+  }
+  
+  .sel {
+    fill:red;
+  }
+  
+  .brush .extent {
+    fill-opacity: .1;
+    stroke: #fff;
+    shape-rendering: crispEdges;
+  }
