@@ -65,7 +65,7 @@
         <button class="btn btn-link btn-sm text-white order-1 order-sm-0" id="sidebarToggle" href="#">
           <i class="fas fa-bars"></i>
         </button>
-        <div id='datetimepicker1'></div>
+        <div id='datetimepicker1'>
           <SELECT name="anne" size="1">
             <OPTION>2019
             <OPTION>2018
@@ -79,9 +79,12 @@
             <OPTION>2010
             <OPTION>2009
             <OPTION>2018
-            <input type="submit" value="sort" id='sort'>  
           </SELECT>
         </div>
+
+      <div id='clear'>
+        <input type="submit" value="clear" id='clear' onclick="document.location.reload(true)">
+      </div>  
         <!-- Navbar Search -->
         <form class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0", name="auteur" , onSubmit="recherche(this)">
           <div class="input-group">

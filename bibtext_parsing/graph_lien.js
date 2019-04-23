@@ -25,6 +25,10 @@ function delete_cookie( name ) {
     document.cookie = name + 'ppkcookie2=encore un autre test; expires=Fri, 01 Jan 2010 00:0:00 UTC; path=/';
   }
 
+function clear(){
+    document.location.reload(true);
+}
+
    var BLEABLEA = [
      {source: 'Romain Vuillemot', target: 'Richard Alligier', group: "1"},
      {source: 'Romain Vuillemot',target: 'Maxime Cordeil', group: "1"},
