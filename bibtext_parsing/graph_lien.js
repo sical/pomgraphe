@@ -67,7 +67,21 @@ d3.json("bibtext_parsing/test.json", function(error, graph) {
       .attr("class", "link")
       .attr("stroke-width", function(d){return d.nbLinks/3;})
       .attr("opacity",function(d){
-          return d.lastColaboration;}); // Pour demain
+        //    d = ((d.lastColaboration-2000)/10)-1;
+        //     console.log(d);
+            if( d.lastColaboration >= 2017 ){
+                console.log(d.lastColaboration + "nom avec plus de 0.8");
+                return 1;
+            }
+            if (d.lastColaboration >= 2015) {
+                console.log(d.lastColaboration + "nom avec plus de 0.6");
+                return 0.5;
+            }
+            if (d.lastColaboration <= 2014 ){
+                console.log(d.lastColaboration + "other");
+                return 0.2;
+            }
+            }); // Pour demain
 
   var node = svg.selectAll(".node")
       .data(graph.nodes)
