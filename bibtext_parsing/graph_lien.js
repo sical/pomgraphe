@@ -3,10 +3,10 @@ var width = 1250,
 var auteur = "";
 var year ;
 
+var tab_auteur = [] ;
 
 function recherche(nForm) {
     auteur = $('#auteur').val();
-    alert(auteur);
     d3.selectAll(".node[name_node='"+auteur+"']").attr("class","node sel");
     d3.selectAll(".link[source='"+auteur+"']").attr("class","link link2").attr("opacity",1);
     d3.selectAll(".link[target='"+auteur+"']").attr("class","link link2").attr("opacity",1);
@@ -14,11 +14,9 @@ function recherche(nForm) {
 
 function sort_year(form){
     year = $('#datetimepicker1').val();
-    alert(year);
 }
 
 document.querySelector("select").addEventListener("change", function (){
-    alert(this.value);
     year=this.value;
     d3.selectAll(".link[last='"+year+"']").attr("class","link link2").attr("opacity",1);
 }, false);
@@ -31,6 +29,15 @@ function clear(){
     document.location.reload(true);
 }
 
+$(function(){
+    $("#auteur").autocomplete({
+        source:tab_auteur
+    });
+});
+
+// window.addEventListener('resize', function(event){
+//     redraw();
+// });
 
 
  var force = d3.layout.force()
@@ -70,8 +77,8 @@ d3.json("bibtext_parsing/test.json", function(error, graph) {
     .enter().append("line")
       .attr("class", "link")
       .attr("last",function(d){return d.lastColaboration;})
-      .attr("source",function(d){return d.source;})
-      .attr("target",function(d){return d.target;})
+      .attr("source",function(d){return d.source.id;})
+      .attr("target",function(d){return d.target.id;})
       .attr("stroke-width", function(d){return d.nbLinks/3;})
       .attr("opacity",function(d){
             if( d.lastColaboration >= 2017 ){
@@ -89,7 +96,7 @@ d3.json("bibtext_parsing/test.json", function(error, graph) {
       .data(graph.nodes)
       .enter().append("circle")
       .attr("class", "node")
-      .attr("name_node",function(d){return d.id;})
+      .attr("name_node",function(d){tab_auteur.push(d.id) ;return d.id;})
       .attr("r", 6)
       .on("mouseover", mouseover)
       .on("mouseout", mouseout)
