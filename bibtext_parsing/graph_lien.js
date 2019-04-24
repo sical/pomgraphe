@@ -8,6 +8,8 @@ function recherche(nForm) {
     auteur = $('#auteur').val();
     alert(auteur);
     d3.selectAll(".node[name_node='"+auteur+"']").attr("class","node sel");
+    d3.selectAll(".link[source='"+auteur+"']").attr("class","link link2").attr("opacity",1);
+    d3.selectAll(".link[target='"+auteur+"']").attr("class","link link2").attr("opacity",1);
 }
 
 function sort_year(form){
@@ -18,7 +20,7 @@ function sort_year(form){
 document.querySelector("select").addEventListener("change", function (){
     alert(this.value);
     year=this.value;
-    d3.selectAll(".link[last='"+year+"']").attr("class","link link2");
+    d3.selectAll(".link[last='"+year+"']").attr("class","link link2").attr("opacity",1);
 }, false);
 
 function delete_cookie( name ) {
@@ -29,21 +31,7 @@ function clear(){
     document.location.reload(true);
 }
 
-   var BLEABLEA = [
-     {source: 'Romain Vuillemot', target: 'Richard Alligier', group: "1"},
-     {source: 'Romain Vuillemot',target: 'Maxime Cordeil', group: "1"},
-     {source: 'Romain Vuillemot',target: 'Steven M.Drucker', group: "1"},
-     {source: 'Romain Vuillemot', target: 'Nathalie Henry Riche', group: "1"},
-     {source: 'Romain Vuillemot',target:'Christophe Hurter', group: "1"}
-   ];
 
-    // var links = d3.json("test.json", function(error, json){
-    //      if (error) {alert("generale")}
-    //     // for (data in json){
-    //     //     BLEABLEA.push(data);
-    //     //     alert(BLEABLEA.length)
-    //     // }
-    // });
 
  var force = d3.layout.force()
     .charge(-90)
@@ -82,20 +70,20 @@ d3.json("bibtext_parsing/test.json", function(error, graph) {
     .enter().append("line")
       .attr("class", "link")
       .attr("last",function(d){return d.lastColaboration;})
+      .attr("source",function(d){return d.source;})
+      .attr("target",function(d){return d.target;})
       .attr("stroke-width", function(d){return d.nbLinks/3;})
       .attr("opacity",function(d){
-        //    d = ((d.lastColaboration-2000)/10)-1;
-        //     console.log(d);
             if( d.lastColaboration >= 2017 ){
                 return 1;
             }
-            if (d.lastColaboration >= 2015) {
+            if (d.lastColaboration >= 2014) {
                 return 0.5;
             }
-            if (d.lastColaboration <= 2014 ){
+            if (d.lastColaboration <= 2010 ){
                 return 0.2;
             }
-            }); // Pour demain
+            });
 
   var node = svg.selectAll(".node")
       .data(graph.nodes)
@@ -103,11 +91,11 @@ d3.json("bibtext_parsing/test.json", function(error, graph) {
       .attr("class", "node")
       .attr("name_node",function(d){return d.id;})
       .attr("r", 6)
-      .on("click", mouseover)
+      .on("mouseover", mouseover)
       .on("mouseout", mouseout)
       .attr("fill",function(d){
           if(auteur == d.id){
-            //   document.getElementById('auteur_name').innerHTML = auteur + " nombre de d'articles co-écrits: " + d.nbLinks +" et la derniére collaboration: " + d.lastColaboration ;
+            //   document.getElementById('auteur_name').innerHTML = auteur + " et la derniére collaboration: " + d.lastColaboration ;
               return color3(d);
           }else{
           return color(d.group);}
@@ -130,16 +118,16 @@ d3.json("bibtext_parsing/test.json", function(error, graph) {
 
   function mouseover() {
     // document.getElementById("autheur").value = this;
-      d3.select(this).select("circle").transition()
+      d3.select(this).transition()
           .duration(750)
-          .attr("r", 16);
+          .attr("r",15);
   }
 
   function mouseout() {
-      d3.select(this).select("circle").transition()
+      d3.select(this).transition()
           .duration(750)
-          .attr("r", 8);
+          .attr("r", 6);
   }
  
 });
-delete_cookie(auteur);
+// delete_cookie(auteur);
