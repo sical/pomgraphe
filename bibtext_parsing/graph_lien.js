@@ -85,7 +85,7 @@ d3.json("bibtext_parsing/test.json", function(error, graph) {
       .attr("last",function(d){return d.lastColaboration;})
       .attr("source",function(d){return d.source.id;})
       .attr("target",function(d){return d.target.id;})
-      .attr("stroke-width", function(d){return d.nbLinks/3;})
+      .attr("stroke-width", function(d){return d.nbLinks;})
       .attr("opacity",function(d){
             if( d.lastColaboration >= 2017 ){
                 return 1;
