@@ -1,24 +1,30 @@
-var width = 1250,
-    height = 1100;
+// var width = 1250,
+//     height = 1100;
+if (document.body)
+{
+var width = (window.innerWidth);
+var height = (window.innerHeight);
+} 
+
 var auteur = "";
 var year ;
+var tab_auteur = [] ;
 
 
 function recherche(nForm) {
     auteur = $('#auteur').val();
-    alert(auteur);
     d3.selectAll(".node[name_node='"+auteur+"']").attr("class","node sel");
+    d3.selectAll(".link[source='"+auteur+"']").attr("class","link link2").attr("opacity",1);
+    d3.selectAll(".link[target='"+auteur+"']").attr("class","link link2").attr("opacity",1);
 }
 
 function sort_year(form){
     year = $('#datetimepicker1').val();
-    alert(year);
 }
 
 document.querySelector("select").addEventListener("change", function (){
-    alert(this.value);
     year=this.value;
-    d3.selectAll(".link[last='"+year+"']").attr("class","link link2");
+    d3.selectAll(".link[last='"+year+"']").attr("class","link link2").attr("opacity",1);
 }, false);
 
 function delete_cookie( name ) {
@@ -29,21 +35,16 @@ function clear(){
     document.location.reload(true);
 }
 
-   var BLEABLEA = [
-     {source: 'Romain Vuillemot', target: 'Richard Alligier', group: "1"},
-     {source: 'Romain Vuillemot',target: 'Maxime Cordeil', group: "1"},
-     {source: 'Romain Vuillemot',target: 'Steven M.Drucker', group: "1"},
-     {source: 'Romain Vuillemot', target: 'Nathalie Henry Riche', group: "1"},
-     {source: 'Romain Vuillemot',target:'Christophe Hurter', group: "1"}
-   ];
+$(function(){
+    $("#auteur").autocomplete({
+        source:tab_auteur
+    });
+});
 
-    // var links = d3.json("test.json", function(error, json){
-    //      if (error) {alert("generale")}
-    //     // for (data in json){
-    //     //     BLEABLEA.push(data);
-    //     //     alert(BLEABLEA.length)
-    //     // }
-    // });
+// window.addEventListener('resize', function(event){
+//     redraw();
+// });
+
 
  var force = d3.layout.force()
     .charge(-90)
@@ -82,32 +83,32 @@ d3.json("bibtext_parsing/test.json", function(error, graph) {
     .enter().append("line")
       .attr("class", "link")
       .attr("last",function(d){return d.lastColaboration;})
+      .attr("source",function(d){return d.source.id;})
+      .attr("target",function(d){return d.target.id;})
       .attr("stroke-width", function(d){return d.nbLinks/3;})
       .attr("opacity",function(d){
-        //    d = ((d.lastColaboration-2000)/10)-1;
-        //     console.log(d);
             if( d.lastColaboration >= 2017 ){
                 return 1;
             }
-            if (d.lastColaboration >= 2015) {
+            if (d.lastColaboration >= 2014) {
                 return 0.5;
             }
-            if (d.lastColaboration <= 2014 ){
+            if (d.lastColaboration <= 2010 ){
                 return 0.2;
             }
-            }); // Pour demain
+            });
 
   var node = svg.selectAll(".node")
       .data(graph.nodes)
       .enter().append("circle")
       .attr("class", "node")
-      .attr("name_node",function(d){return d.id;})
+      .attr("name_node",function(d){tab_auteur.push(d.id) ;return d.id;})
       .attr("r", 6)
-      .on("click", mouseover)
+      .on("mouseover", mouseover)
       .on("mouseout", mouseout)
       .attr("fill",function(d){
           if(auteur == d.id){
-            //   document.getElementById('auteur_name').innerHTML = auteur + " nombre de d'articles co-écrits: " + d.nbLinks +" et la derniére collaboration: " + d.lastColaboration ;
+            //   document.getElementById('auteur_name').innerHTML = auteur + " et la derniére collaboration: " + d.lastColaboration ;
               return color3(d);
           }else{
           return color(d.group);}
@@ -130,16 +131,25 @@ d3.json("bibtext_parsing/test.json", function(error, graph) {
 
   function mouseover() {
     // document.getElementById("autheur").value = this;
-      d3.select(this).select("circle").transition()
+      d3.select(this).transition()
           .duration(750)
-          .attr("r", 16);
+          .attr("r",15);
   }
 
   function mouseout() {
-      d3.select(this).select("circle").transition()
+      d3.select(this).transition()
           .duration(750)
-          .attr("r", 8);
+          .attr("r", 6);
   }
  
 });
-delete_cookie(auteur);
+
+// var svg = d3.select('.chart-container').append("svg")
+//     .attr("width", '100%')
+//     .attr("height", '100%')
+//     .attr('viewBox','0 0 '+Math.min(width,height)+' '+Math.min(width,height))
+//     .attr('preserveAspectRatio','xMinYMin')
+//     .append("g")
+//     .attr("transform", "translate(" + Math.min(width,height) / 2 + "," + Math.min(width,height) / 2 + ")");
+
+// delete_cookie(auteur);

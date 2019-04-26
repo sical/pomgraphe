@@ -12,11 +12,11 @@
   }
   
   .link2 {
-    stroke: #008000;
+    stroke: #9400d3;
   }
   
   .sel {
-    fill:red;
+    fill:rgb(19, 18, 18);
   }
   
   .brush .extent {
@@ -24,3 +24,4 @@
     stroke: #fff;
     shape-rendering: crispEdges;
   }
+

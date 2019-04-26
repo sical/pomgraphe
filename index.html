@@ -24,6 +24,8 @@
     <script src="https://d3js.org/d3.v3.min.js"></script>
     <script src="https://code.jquery.com/jquery.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
   </head>
 
@@ -35,7 +37,7 @@
         <a class="navbar-brand mr-1" href="index.html">pomgraphe</a>
     
         <button class="btn btn-link btn-sm text-white order-1 order-sm-0" id="sidebarToggle" href="#">
-          <i class="fas fa-bars"></i>
+          <!-- <i class="fas fa-bars"></i> -->
         </button>
         <div id='datetimepicker1'>
           <SELECT name="anne" size="1">
@@ -58,7 +60,7 @@
         <input type="submit" value="clear" id='clear' onclick="document.location.reload(true)" class="btn btn-primary">
       </div>  
         <!-- Navbar Search -->
-        <form class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0", name="auteur" , onSubmit="recherche(this)">
+        <form action="#" class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0", name="auteur" , onSubmit="recherche(this)">
           <div class="input-group">
             <input type="text" class="form-control" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2",name="auteur", id="auteur">
             <div class="input-group-append">
