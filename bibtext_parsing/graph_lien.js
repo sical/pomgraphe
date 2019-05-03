@@ -10,12 +10,28 @@ var auteur = "";
 var year ;
 var tab_auteur = [] ;
 
+var slider = document.getElementById("myRange");
+var output = document.getElementById("myRange");
+var force_2 = -90;
+
+// Update the current slider value (each time you drag the slider handle)
+slider.oninput = function() {
+  output.innerHTML = this.value;
+  force_2 = this.value;
+  force.charge(force_2);
+  force.start();
+} 
+
+
 
 function recherche(nForm) {
     auteur = $('#auteur').val();
     d3.selectAll(".node[name_node='"+auteur+"']").attr("class","node sel");
     d3.selectAll(".link[source='"+auteur+"']").attr("class","link link2").attr("opacity",1);
     d3.selectAll(".link[target='"+auteur+"']").attr("class","link link2").attr("opacity",1);
+    d3.selectAll(".node").attr("fill",function(d){
+        document.getElementById('auteur_name').innerHTML = auteur + " et la derniére collaboration: " + d.lastColaboration ;
+    });
 }
 
 function sort_year(form){
@@ -47,9 +63,17 @@ $(function(){
 
 
  var force = d3.layout.force()
-    .charge(-90)
+    // .charge(force_2)
     .linkDistance(60)
     .size([width, height]);
+
+var zoom = d3.behavior.zoom()
+    .scaleExtent([1, 10])
+    .on("zoom", zoomed);
+
+function zoomed() {
+    container.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
+}
 
 var svg = d3.select("#chartline1").append("svg")
     .attr("width", width)
@@ -107,7 +131,7 @@ d3.json("bibtext_parsing/test.json", function(error, graph) {
       .on("mouseover", mouseover)
       .on("mouseout", mouseout)
       .attr("fill",function(d){
-          if(auteur == d.id){
+          if(auteur == d.id){ 
             //   document.getElementById('auteur_name').innerHTML = auteur + " et la derniére collaboration: " + d.lastColaboration ;
               return color3(d);
           }else{
