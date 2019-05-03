@@ -29,14 +29,16 @@ function recherche(nForm) {
     d3.selectAll(".node[name_node='"+auteur+"']").attr("class","node sel");
     d3.selectAll(".link[source='"+auteur+"']").attr("class","link link2").attr("opacity",1);
     d3.selectAll(".link[target='"+auteur+"']").attr("class","link link2").attr("opacity",1);
-    d3.selectAll(".node").attr("fill",function(d){
-        document.getElementById('auteur_name').innerHTML = auteur + " et la derniére collaboration: " + d.lastColaboration ;
-    });
+    // d3.selectAll(".node").attr("fill",function(d){
+    //     document.getElementById('auteur_name').innerHTML = auteur + " et la derniére collaboration: " + d.lastColaboration ;
+    // });
+    d3.zoomTransform(".node[name_node='"+auteur+"']");
 }
 
 function sort_year(form){
     year = $('#datetimepicker1').val();
 }
+
 
 document.querySelector("select").addEventListener("change", function (){
     year=this.value;
@@ -63,21 +65,17 @@ $(function(){
 
 
  var force = d3.layout.force()
-    // .charge(force_2)
     .linkDistance(60)
     .size([width, height]);
 
-var zoom = d3.behavior.zoom()
-    .scaleExtent([1, 10])
-    .on("zoom", zoomed);
-
-function zoomed() {
-    container.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
-}
 
 var svg = d3.select("#chartline1").append("svg")
     .attr("width", width)
-    .attr("height", height);
+    .attr("height", height)
+    .call(d3.behavior.zoom().on("zoom", function () {
+        svg.attr("transform", "translate(" + d3.event.translate + ")" + " scale(" + d3.event.scale + ")")
+      }))
+    .append("g");
 
 var color = d3.scale.category10();
 var color2  = d3.scale.category20();
@@ -167,6 +165,8 @@ d3.json("bibtext_parsing/test.json", function(error, graph) {
   }
  
 });
+
+
 
 // var svg = d3.select('.chart-container').append("svg")
 //     .attr("width", '100%')
