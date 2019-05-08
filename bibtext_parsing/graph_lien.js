@@ -29,10 +29,11 @@ function recherche(nForm) {
     d3.selectAll(".node[name_node='"+auteur+"']").attr("class","node sel");
     d3.selectAll(".link[source='"+auteur+"']").attr("class","link link2").attr("opacity",1);
     d3.selectAll(".link[target='"+auteur+"']").attr("class","link link2").attr("opacity",1);
-    // d3.selectAll(".node").attr("fill",function(d){
-    //     document.getElementById('auteur_name').innerHTML = auteur + " et la derniére collaboration: " + d.lastColaboration ;
-    // });
     d3.zoomTransform(".node[name_node='"+auteur+"']");
+}
+
+function affiche_sical(){
+    // d3.selectAll(".node")
 }
 
 function sort_year(form){
@@ -128,6 +129,9 @@ d3.json("bibtext_parsing/test.json", function(error, graph) {
       .attr("r", 6)
       .on("mouseover", mouseover)
       .on("mouseout", mouseout)
+      .on("click",function(d){
+          document.getElementById('auteur_name').innerHTML = d.id + "et la derniére collaboration " + d.lastColaboration + " et il se trouve dans l'équipe " + d.group ;
+      })
       .attr("fill",function(d){
           if(auteur == d.id){ 
             //   document.getElementById('auteur_name').innerHTML = auteur + " et la derniére collaboration: " + d.lastColaboration ;
