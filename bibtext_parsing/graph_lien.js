@@ -4,6 +4,7 @@ if (document.body)
 {
 var width = (window.innerWidth);
 var height = (window.innerHeight);
+height = height - 200;
 } 
 
 var auteur = "";
@@ -33,7 +34,47 @@ function recherche(nForm) {
 }
 
 function affiche_sical(){
-    // d3.selectAll(".node")
+    var team_sical;
+    var to_keep_link;
+    var to_keep_node;
+    team_sical=d3.selectAll(".node[name_team='sical']")[0].map(node => node.getAttribute("name_node"));
+    // console.log(team_sical);
+    // to_keep = d3.selectAll(".link").filter(link => team_sical.includes(link.source.id) || team_sical.includes(link.target.id));
+    to_keep_link = d3.selectAll(".link").filter(function(link){
+        //console.log(link.source.id);
+        return team_sical.includes(link.source.id) || team_sical.includes(link.target.id);
+    })
+    to_keep_node = team_sical.concat(to_keep_link.map(function(link){
+        // console.log(link[0].getAttribute("source"));
+        var tab = [];
+        for(var i = 0 ; i < to_keep_link.size();i++){
+            if (team_sical.includes(link[i].getAttribute("target"))){
+                if (!team_sical.includes(link[i].getAttribute("source"))){
+                    tab.push(link[i].getAttribute("source"));
+                }
+            } else {
+                if (team_sical.includes(link[i].getAttribute("source"))){
+                    tab.push(link[i].getAttribute("target"));
+                }
+            } 
+        }
+        // console.log(tab);
+        return tab;
+    })[0]);
+    console.log(to_keep_link[0]);
+    d3.selectAll(".node").filter(node => !to_keep_node.includes(node.id)).remove();
+    // d3.selectAll(".link").filter(link => !to_keep_link[0].includes(link)).remove();
+    d3.selectAll(".link").filter(function(link){
+        // console.log(link.source.id);
+        // console.log(to_keep_link.size());
+        for(var i = 0 ; i < to_keep_link.size();i++){
+            if(to_keep_link[0][i].getAttribute("source")== link.source.id && to_keep_link[0][i].getAttribute("target")== link.target.id){
+                return false;
+            }
+        }
+        return true;
+    }).remove();
+
 }
 
 function sort_year(form){
@@ -126,6 +167,7 @@ d3.json("bibtext_parsing/test.json", function(error, graph) {
       .enter().append("circle")
       .attr("class", "node")
       .attr("name_node",function(d){tab_auteur.push(d.id) ;return d.id;})
+      .attr("name_team",function(d){return d.group;})
       .attr("r", 6)
       .on("mouseover", mouseover)
       .on("mouseout", mouseout)
