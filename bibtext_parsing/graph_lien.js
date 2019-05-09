@@ -33,11 +33,23 @@ function recherche(nForm) {
     d3.zoomTransform(".node[name_node='"+auteur+"']");
 }
 
-function affiche_sical(){
+function select(name){
+    if (name == "sical"){
+        affiche_select("sical");
+    }
+    if(name == "sma"){
+        affiche_select("SMA");
+    }
+    if(name == "Tweak"){
+        affiche_select("Tweak");
+    }
+}
+
+function affiche_select(name_equipe){
     var team_sical;
     var to_keep_link;
     var to_keep_node;
-    team_sical=d3.selectAll(".node[name_team='sical']")[0].map(node => node.getAttribute("name_node"));
+    team_sical=d3.selectAll(".node[name_team='"+name_equipe+"']")[0].map(node => node.getAttribute("name_node"));
     // console.log(team_sical);
     // to_keep = d3.selectAll(".link").filter(link => team_sical.includes(link.source.id) || team_sical.includes(link.target.id));
     to_keep_link = d3.selectAll(".link").filter(function(link){
