@@ -5,9 +5,11 @@ if (document.body)
 var width = (window.innerWidth);
 var height = (window.innerHeight);
 height = height - 200;
+width = width -536;
 } 
 
 var auteur = "";
+var auteur_other ;
 var year ;
 var tab_auteur = [] ;
 
@@ -31,6 +33,12 @@ function recherche(nForm) {
     d3.selectAll(".link[source='"+auteur+"']").attr("class","link link2").attr("opacity",1);
     d3.selectAll(".link[target='"+auteur+"']").attr("class","link link2").attr("opacity",1);
     d3.zoomTransform(".node[name_node='"+auteur+"']");
+}
+
+function affiche_liste(){
+    d3.selectAll(".link[source='"+auteur_other+"']").attr("source",function(d){
+        document.getElementById('other').innerHTML = d.titles;
+    })
 }
 
 function select(name){
@@ -113,10 +121,6 @@ $(function(){
     });
 });
 
-// window.addEventListener('resize', function(event){
-//     redraw();
-// });
-
 
  var force = d3.layout.force()
     .linkDistance(60)
@@ -184,11 +188,14 @@ d3.json("bibtext_parsing/test.json", function(error, graph) {
       .on("mouseover", mouseover)
       .on("mouseout", mouseout)
       .on("click",function(d){
-          document.getElementById('auteur_name').innerHTML = d.id + "et la derniére collaboration " + d.lastColaboration + " et il se trouve dans l'équipe " + d.group ;
+          auteur_other = d.id;
+          document.getElementById('name_click').innerHTML = d.id;
+          document.getElementById('last_collaboration_click').innerHTML = d.lastColaboration;
+          document.getElementById('team_clic').innerHTML = d.group;
+          affiche_liste();
       })
       .attr("fill",function(d){
           if(auteur == d.id){ 
-            //   document.getElementById('auteur_name').innerHTML = auteur + " et la derniére collaboration: " + d.lastColaboration ;
               return color3(d);
           }else{
           return color(d.group);}
@@ -210,7 +217,6 @@ d3.json("bibtext_parsing/test.json", function(error, graph) {
   });
 
   function mouseover() {
-    // document.getElementById("autheur").value = this;
       d3.select(this).transition()
           .duration(750)
           .attr("r",15);
