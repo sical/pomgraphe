@@ -229,15 +229,3 @@ d3.json("bibtext_parsing/test.json", function(error, graph) {
   }
  
 });
-
-
-
-// var svg = d3.select('.chart-container').append("svg")
-//     .attr("width", '100%')
-//     .attr("height", '100%')
-//     .attr('viewBox','0 0 '+Math.min(width,height)+' '+Math.min(width,height))
-//     .attr('preserveAspectRatio','xMinYMin')
-//     .append("g")
-//     .attr("transform", "translate(" + Math.min(width,height) / 2 + "," + Math.min(width,height) / 2 + ")");
-
-// delete_cookie(auteur);
