@@ -51,6 +51,9 @@ function select(name){
     if(name == "Tweak"){
         affiche_select("Tweak");
     }
+    if(name == "IMAGINE"){
+        affiche_select("IMAGINE");
+    }
 }
 
 function affiche_select(name_equipe){
@@ -139,6 +142,7 @@ var color = d3.scale.category10();
 var color2  = d3.scale.category20();
 var color3 = d3.scale.category20b();
 
+
 d3.json("bibtext_parsing/test.json", function(error, graph) {
   if (error) throw error;
 
@@ -198,7 +202,19 @@ d3.json("bibtext_parsing/test.json", function(error, graph) {
           if(auteur == d.id){ 
               return color3(d);
           }else{
-          return color(d.group);}
+              if(d.group == "sical"){
+                return d3.rgb("blue");
+              }
+              if(d.group == "SMA"){
+                  return d3.rgb("red");
+              }
+              if(d.group == "Tweak"){
+                  return d3.rgb("green");
+              }
+              if(d.group == "IMAGINE"){
+                  return d3.rgb("yellow")
+              }
+          return d3.rgb("orange");}
         })
       .style("fill", function(d) { return d.id; })
       .call(force.drag);
