@@ -50,3 +50,17 @@
     left: 1030px;
   }
 
+  li.ui-menu-item{
+    list-style-type: none;
+  }
+
+  #ui-id-1{
+    max-height: 300px;
+    border: 3px solid;
+    overflow-y : scroll; 
+  }
+
+  li{
+    cursor: pointer;
+  }
+
