@@ -54,6 +54,9 @@ function select(name){
     if(name == "IMAGINE"){
         affiche_select("IMAGINE");
     }
+    if(name == "DM2L"){
+        affiche_select("DM2L");
+    }
 }
 
 function affiche_select(name_equipe){
@@ -212,7 +215,10 @@ d3.json("bibtext_parsing/test.json", function(error, graph) {
                   return d3.rgb("green");
               }
               if(d.group == "IMAGINE"){
-                  return d3.rgb("yellow")
+                  return d3.rgb("Magenta");
+              }
+              if(d.group == "DM2L"){
+                  return d3.rgb("Sienna");
               }
           return d3.rgb("orange");}
         })
