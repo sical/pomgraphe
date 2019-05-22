@@ -43,3 +43,24 @@
     transition: opacity .2s;
   }
 
+  .tables {
+    width:30%;
+    position: absolute;
+    top: 300px;
+    left: 1030px;
+  }
+
+  li.ui-menu-item{
+    list-style-type: none;
+  }
+
+  #ui-id-1{
+    max-height: 245px;
+    border: 3px solid;
+    overflow-y : scroll; 
+  }
+
+  li{
+    cursor: pointer;
+  }
+

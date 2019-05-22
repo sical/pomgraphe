@@ -4,9 +4,12 @@ if (document.body)
 {
 var width = (window.innerWidth);
 var height = (window.innerHeight);
+height = height - 200;
+width = width -536;
 } 
 
 var auteur = "";
+var auteur_other ;
 var year ;
 var tab_auteur = [] ;
 
@@ -29,10 +32,75 @@ function recherche(nForm) {
     d3.selectAll(".node[name_node='"+auteur+"']").attr("class","node sel");
     d3.selectAll(".link[source='"+auteur+"']").attr("class","link link2").attr("opacity",1);
     d3.selectAll(".link[target='"+auteur+"']").attr("class","link link2").attr("opacity",1);
-    // d3.selectAll(".node").attr("fill",function(d){
-    //     document.getElementById('auteur_name').innerHTML = auteur + " et la derniére collaboration: " + d.lastColaboration ;
-    // });
     d3.zoomTransform(".node[name_node='"+auteur+"']");
+}
+
+function affiche_liste(){
+    d3.selectAll(".link[source='"+auteur_other+"']").attr("source",function(d){
+        document.getElementById('other').innerHTML = d.titles;
+    })
+}
+
+function select(name){
+    if (name == "sical"){
+        affiche_select("sical");
+    }
+    if(name == "sma"){
+        affiche_select("SMA");
+    }
+    if(name == "Tweak"){
+        affiche_select("Tweak");
+    }
+    if(name == "IMAGINE"){
+        affiche_select("IMAGINE");
+    }
+    if(name == "DM2L"){
+        affiche_select("DM2L");
+    }
+}
+
+function affiche_select(name_equipe){
+    var team_sical;
+    var to_keep_link;
+    var to_keep_node;
+    team_sical=d3.selectAll(".node[name_team='"+name_equipe+"']")[0].map(node => node.getAttribute("name_node"));
+    // console.log(team_sical);
+    // to_keep = d3.selectAll(".link").filter(link => team_sical.includes(link.source.id) || team_sical.includes(link.target.id));
+    to_keep_link = d3.selectAll(".link").filter(function(link){
+        //console.log(link.source.id);
+        return team_sical.includes(link.source.id) || team_sical.includes(link.target.id);
+    })
+    to_keep_node = team_sical.concat(to_keep_link.map(function(link){
+        // console.log(link[0].getAttribute("source"));
+        var tab = [];
+        for(var i = 0 ; i < to_keep_link.size();i++){
+            if (team_sical.includes(link[i].getAttribute("target"))){
+                if (!team_sical.includes(link[i].getAttribute("source"))){
+                    tab.push(link[i].getAttribute("source"));
+                }
+            } else {
+                if (team_sical.includes(link[i].getAttribute("source"))){
+                    tab.push(link[i].getAttribute("target"));
+                }
+            } 
+        }
+        // console.log(tab);
+        return tab;
+    })[0]);
+    console.log(to_keep_link[0]);
+    d3.selectAll(".node").filter(node => !to_keep_node.includes(node.id)).remove();
+    // d3.selectAll(".link").filter(link => !to_keep_link[0].includes(link)).remove();
+    d3.selectAll(".link").filter(function(link){
+        // console.log(link.source.id);
+        // console.log(to_keep_link.size());
+        for(var i = 0 ; i < to_keep_link.size();i++){
+            if(to_keep_link[0][i].getAttribute("source")== link.source.id && to_keep_link[0][i].getAttribute("target")== link.target.id){
+                return false;
+            }
+        }
+        return true;
+    }).remove();
+
 }
 
 function sort_year(form){
@@ -59,10 +127,6 @@ $(function(){
     });
 });
 
-// window.addEventListener('resize', function(event){
-//     redraw();
-// });
-
 
  var force = d3.layout.force()
     .linkDistance(60)
@@ -80,6 +144,7 @@ var svg = d3.select("#chartline1").append("svg")
 var color = d3.scale.category10();
 var color2  = d3.scale.category20();
 var color3 = d3.scale.category20b();
+
 
 d3.json("bibtext_parsing/test.json", function(error, graph) {
   if (error) throw error;
@@ -125,15 +190,37 @@ d3.json("bibtext_parsing/test.json", function(error, graph) {
       .enter().append("circle")
       .attr("class", "node")
       .attr("name_node",function(d){tab_auteur.push(d.id) ;return d.id;})
+      .attr("name_team",function(d){return d.group;})
       .attr("r", 6)
       .on("mouseover", mouseover)
       .on("mouseout", mouseout)
+      .on("click",function(d){
+          auteur_other = d.id;
+          document.getElementById('name_click').innerHTML = d.id;
+          document.getElementById('last_collaboration_click').innerHTML = d.lastColaboration;
+          document.getElementById('team_clic').innerHTML = d.group;
+          affiche_liste();
+      })
       .attr("fill",function(d){
           if(auteur == d.id){ 
-            //   document.getElementById('auteur_name').innerHTML = auteur + " et la derniére collaboration: " + d.lastColaboration ;
               return color3(d);
           }else{
-          return color(d.group);}
+              if(d.group == "sical"){
+                return d3.rgb("blue");
+              }
+              if(d.group == "SMA"){
+                  return d3.rgb("red");
+              }
+              if(d.group == "Tweak"){
+                  return d3.rgb("green");
+              }
+              if(d.group == "IMAGINE"){
+                  return d3.rgb("Magenta");
+              }
+              if(d.group == "DM2L"){
+                  return d3.rgb("Sienna");
+              }
+          return d3.rgb("orange");}
         })
       .style("fill", function(d) { return d.id; })
       .call(force.drag);
@@ -152,7 +239,6 @@ d3.json("bibtext_parsing/test.json", function(error, graph) {
   });
 
   function mouseover() {
-    // document.getElementById("autheur").value = this;
       d3.select(this).transition()
           .duration(750)
           .attr("r",15);
@@ -165,15 +251,3 @@ d3.json("bibtext_parsing/test.json", function(error, graph) {
   }
  
 });
-
-
-
-// var svg = d3.select('.chart-container').append("svg")
-//     .attr("width", '100%')
-//     .attr("height", '100%')
-//     .attr('viewBox','0 0 '+Math.min(width,height)+' '+Math.min(width,height))
-//     .attr('preserveAspectRatio','xMinYMin')
-//     .append("g")
-//     .attr("transform", "translate(" + Math.min(width,height) / 2 + "," + Math.min(width,height) / 2 + ")");
-
-// delete_cookie(auteur);

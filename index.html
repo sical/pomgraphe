@@ -106,31 +106,32 @@
           </li>
         </ul> -->
     
-        <div id="content-wrapper">
+        <div id="content-wrapper" style="padding-bottom: 0%">
     
           <div class="container-fluid">
     
             <!-- Breadcrumbs-->
             <ol class="breadcrumb">
               <li class="breadcrumb-item">
-                <a href="#">Dashboard</a>
+                <a href="#" onclick="select('sical')" style="color:blue">Sical </a>
               </li>
-              <li class="breadcrumb-item active">Overview</li>
 
               <li class="breadcrumb-item">
-                <a href="#">Sical</a>
+                <a href="#"onclick="select('sma')" style="color:red">SMA</a>
               </li>
-              <li class="breadcrumb-item active">Situated Interaction, Collaboration, Adaptation and Learning</li>
 
               <li class="breadcrumb-item">
-                <a href="#">SMA</a>
+                <a href="#"onclick="select('Tweak')" style="color:rgb(0, 255, 21)">TWEAK</a>
               </li>
-              <li class="breadcrumb-item active">Systèmes Multi-Agents</li>
 
               <li class="breadcrumb-item">
-                <a href="#">TWEAK</a>
+                <a href="#"onclick="select('IMAGINE')" style="color: 	#FF00FF">IMAGINE</a>
               </li>
-              <li class="breadcrumb-item active">Traces, Web, Education, Adaptation, Knowledge</li>
+
+              <li class="breadcrumb-item">
+                <a href="#"onclick="select('DM2L')" style="color:#A0522D">DM2L</a>
+              </li>
+
             </ol>
     
             <!-- Icon Cards-->
@@ -140,8 +141,6 @@
             <!-- Area Chart Example-->
             <div id="chartline1">
                 <div class="card-header">
-                  <i class="fas fa-chart-area"></i>
-                  Area Chart Example
                   <div id="auteur_name">
                    </div>
                   <div class="slidecontainer">
@@ -155,7 +154,31 @@
                       <script src="bibtext_parsing/graph_lien.js"></script>
                   <canvas id="myAreaChart" width="100%" height="30"></canvas>
                 </div>
-
+                
+                <table class="tables">
+                  <thead>
+                    <tr>
+                      <th scope="col">#</th>
+                      <th scope="col">Name</th>
+                      <th scope="col">Last Collaboration</th>
+                      <th scope="col">team</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <th scope="row">1</th>
+                      <td id="name_click"></td>
+                      <td id="last_collaboration_click"></td>
+                      <td id="team_clic"></td>
+                    </tr>
+                    <!-- <h5  id="other"></h5> -->
+                    <tr>
+                      <th scope="row">Articles</th>
+                      <td colspan="1"></td>
+                      <td id="other"></td>
+                    </tr>
+                  </tbody>
+                </table>
               </div>
             </div>
     
