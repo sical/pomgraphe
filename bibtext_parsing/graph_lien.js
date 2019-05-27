@@ -146,7 +146,7 @@ var color2  = d3.scale.category20();
 var color3 = d3.scale.category20b();
 
 
-d3.json("bibtext_parsing/test.json", function(error, graph) {
+d3.json("bibtext_parsing/data.json", function(error, graph) {
   if (error) throw error;
 
   var nodeById = d3.map();
