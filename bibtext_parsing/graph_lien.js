@@ -243,11 +243,17 @@ d3.json("bibtext_parsing/data.json", function(error, graph) { // debut de la con
           .duration(750)
           .attr("r",15);
   }
-
+//6
   function mouseout() {
       d3.select(this).transition()
           .duration(750)
-          .attr("r", 6);
+          .attr("r", function(d){
+              if(d.group == "no team"){
+                  return 6;
+              }else{
+                  return 8;
+              }
+          });
   }
  
 });
