@@ -1,37 +1,35 @@
-## Welcome to GitHub Pages
+## Projet Pomgraph
 
-You can use the [editor on GitHub](https://github.com/sical/pomgraphe/edit/master/README.md) to maintain and preview the content for your website in Markdown files.
+auteur: Yannis Hutt et Adrien Guédet 
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+interface graphique permettant de visualiser un graphe de co-auteurs d'article scientifique dans une interface en javascript.
 
-### Markdown
+## Librairies
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+
+* D3.js
+* Bootstrap
 
 ```markdown
-Syntax highlighted code block
+Arborescence
 
-# Header 1
-## Header 2
-### Header 3
+- ./bibtex_parsing
+    - /bibtex_data
+    - graph_lien.js
+    - Json_Builder.ipynb
+    - parsing.ipynb
+    - pipeline.ipynb
+    - test.json
+- ./css
+- ./d3
+- ./Ipython
+- ./scss
+- ./vendor
+- index.html
 
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
 ```
+dans le dossier [bibtex_parsing] nous pouvons trouver les data provenant de DBLP, ainsi que les fichiers js qui permettent la création et la visualisation du graphe. Il y a aussi les fichiers python pour le parsing et la pipeline des données.
 
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
+L'interface peut-être lancer depuis le fichier index
+.html qui s'ouvre sur un navigateur web.
 
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/sical/pomgraphe/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://help.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
