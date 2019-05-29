@@ -1,5 +1,3 @@
-// var width = 1250,
-//     height = 1100;
 if (document.body)
 {
 var width = (window.innerWidth);
@@ -27,7 +25,7 @@ slider.oninput = function() {
 
 
 
-function recherche(nForm) {
+function recherche(nForm) { // fonction pour le bouton de recherche
     auteur = $('#auteur').val();
     d3.selectAll(".node[name_node='"+auteur+"']").attr("class","node sel");
     d3.selectAll(".link[source='"+auteur+"']").attr("class","link link2").attr("opacity",1);
@@ -35,8 +33,11 @@ function recherche(nForm) {
     d3.zoomTransform(".node[name_node='"+auteur+"']");
 }
 
-function affiche_liste(){
+function affiche_liste(){ // affiche la liste des articles écrits
     d3.selectAll(".link[source='"+auteur_other+"']").attr("source",function(d){
+        document.getElementById('other').innerHTML = d.titles;
+    })
+    d3.selectAll(".link[target='"+auteur_other+"']").attr("source",function(d){
         document.getElementById('other').innerHTML = d.titles;
     })
 }
@@ -59,19 +60,15 @@ function select(name){
     }
 }
 
-function affiche_select(name_equipe){
+function affiche_select(name_equipe){ // permet le filtre par équipe
     var team_sical;
     var to_keep_link;
     var to_keep_node;
     team_sical=d3.selectAll(".node[name_team='"+name_equipe+"']")[0].map(node => node.getAttribute("name_node"));
-    // console.log(team_sical);
-    // to_keep = d3.selectAll(".link").filter(link => team_sical.includes(link.source.id) || team_sical.includes(link.target.id));
     to_keep_link = d3.selectAll(".link").filter(function(link){
-        //console.log(link.source.id);
         return team_sical.includes(link.source.id) || team_sical.includes(link.target.id);
     })
     to_keep_node = team_sical.concat(to_keep_link.map(function(link){
-        // console.log(link[0].getAttribute("source"));
         var tab = [];
         for(var i = 0 ; i < to_keep_link.size();i++){
             if (team_sical.includes(link[i].getAttribute("target"))){
@@ -84,15 +81,11 @@ function affiche_select(name_equipe){
                 }
             } 
         }
-        // console.log(tab);
         return tab;
     })[0]);
     console.log(to_keep_link[0]);
     d3.selectAll(".node").filter(node => !to_keep_node.includes(node.id)).remove();
-    // d3.selectAll(".link").filter(link => !to_keep_link[0].includes(link)).remove();
     d3.selectAll(".link").filter(function(link){
-        // console.log(link.source.id);
-        // console.log(to_keep_link.size());
         for(var i = 0 ; i < to_keep_link.size();i++){
             if(to_keep_link[0][i].getAttribute("source")== link.source.id && to_keep_link[0][i].getAttribute("target")== link.target.id){
                 return false;
@@ -103,12 +96,12 @@ function affiche_select(name_equipe){
 
 }
 
-function sort_year(form){
+function sort_year(form){ // filtre pour les dates
     year = $('#datetimepicker1').val();
 }
 
 
-document.querySelector("select").addEventListener("change", function (){
+document.querySelector("select").addEventListener("change", function (){ // opacité des liens en fonction de la date de la derniére collaboration
     year=this.value;
     d3.selectAll(".link[last='"+year+"']").attr("class","link link2").attr("opacity",1);
 }, false);
@@ -117,11 +110,11 @@ function delete_cookie( name ) {
     document.cookie = name + 'ppkcookie2=encore un autre test; expires=Fri, 01 Jan 2010 00:0:00 UTC; path=/';
   }
 
-function clear(){
+function clear(){ //permet de remettre a zero
     document.location.reload(true);
 }
 
-$(function(){
+$(function(){ // pour l'auto-complétion
     $("#auteur").autocomplete({
         source:tab_auteur
     });
@@ -133,7 +126,7 @@ $(function(){
     .size([width, height]);
 
 
-var svg = d3.select("#chartline1").append("svg")
+var svg = d3.select("#chartline1").append("svg") //zoom du graphe
     .attr("width", width)
     .attr("height", height)
     .call(d3.behavior.zoom().on("zoom", function () {
@@ -146,7 +139,7 @@ var color2  = d3.scale.category20();
 var color3 = d3.scale.category20b();
 
 
-d3.json("bibtext_parsing/test.json", function(error, graph) {
+d3.json("bibtext_parsing/data.json", function(error, graph) { // debut de la construction du graphe
   if (error) throw error;
 
   var nodeById = d3.map();
@@ -223,6 +216,13 @@ d3.json("bibtext_parsing/test.json", function(error, graph) {
           return d3.rgb("orange");}
         })
       .style("fill", function(d) { return d.id; })
+      .attr("r",function(d){
+          if(d.group != "no team"){
+            return 8;
+        }else{
+            return 5;
+          }
+      })
       .call(force.drag);
   node.append("title")
       .text(function (d) { return d.id;});
@@ -238,16 +238,22 @@ d3.json("bibtext_parsing/test.json", function(error, graph) {
     
   });
 
-  function mouseover() {
+  function mouseover() { // évenemtent pour la souris
       d3.select(this).transition()
           .duration(750)
           .attr("r",15);
   }
-
+//6
   function mouseout() {
       d3.select(this).transition()
           .duration(750)
-          .attr("r", 6);
+          .attr("r", function(d){
+              if(d.group == "no team"){
+                  return 6;
+              }else{
+                  return 8;
+              }
+          });
   }
  
 });
