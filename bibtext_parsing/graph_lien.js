@@ -77,6 +77,9 @@ function select(name){
     if(name == "DM2L"){
         affiche_select("DM2L");
     }
+    if(name == "BD"){
+        affiche_select("BD");
+    }
 }
 
 function affiche_select(name_equipe){ // permet le filtre par équipe
