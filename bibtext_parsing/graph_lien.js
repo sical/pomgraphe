@@ -77,6 +77,9 @@ function select(name){
     if(name == "DM2L"){
         affiche_select("DM2L");
     }
+    if(name == "BD"){
+        affiche_select("BD");
+    }
 }
 
 function affiche_select(name_equipe){ // permet le filtre par équipe
@@ -224,13 +227,16 @@ d3.json("bibtext_parsing/data.json", function(error, graph) { // debut de la con
                   return d3.rgb("red");
               }
               if(d.group == "Tweak"){
-                  return d3.rgb("green");
+                  return d3.rgb("SeaGreen");
               }
               if(d.group == "IMAGINE"){
                   return d3.rgb("Magenta");
               }
               if(d.group == "DM2L"){
                   return d3.rgb("Sienna");
+              }
+              if(d.group == "BD"){
+                  return d3.rgb("YellowGreen");
               }
           return d3.rgb("orange");}
         })
