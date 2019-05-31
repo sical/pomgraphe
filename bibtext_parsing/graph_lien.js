@@ -86,6 +86,9 @@ function select(name){
     if(name == "DRIM"){
         affiche_select("DRIM");
     }
+    if (name == "SOC"){
+        affiche_select("SOC");
+    }
 }
 
 function affiche_select(name_equipe){ // permet le filtre par équipe
@@ -249,6 +252,9 @@ d3.json("bibtext_parsing/data.json", function(error, graph) { // debut de la con
               }
               if(d.group == "DRIM"){
                   return d3.rgb("DarkGoldenrod");
+              }
+              if(d.group == "SOC"){
+                  return d3.rgb("SkyBlue");
               }
           return d3.rgb("orange");}
         })
