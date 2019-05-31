@@ -89,6 +89,12 @@ function select(name){
     if (name == "SOC"){
         affiche_select("SOC");
     }
+    if(name == "M2DisCo"){
+        affiche_select("M2DisCo");
+    }
+    if(name == "GeoMod"){
+        affiche_select("GeoMod");
+    }
 }
 
 function affiche_select(name_equipe){ // permet le filtre par équipe
@@ -255,6 +261,12 @@ d3.json("bibtext_parsing/data.json", function(error, graph) { // debut de la con
               }
               if(d.group == "SOC"){
                   return d3.rgb("SkyBlue");
+              }
+              if(d.group == "M2DisCo"){
+                  return d3.rgb("Yellow");
+              }
+              if(d.group == "GeoMod"){
+                  return d3.rgb("RosyBrown");
               }
           return d3.rgb("orange");}
         })
