@@ -83,6 +83,9 @@ function select(name){
     if(name == "GOAL"){
         affiche_select("GOAL");
     }
+    if(name == "DRIM"){
+        affiche_select("DRIM");
+    }
 }
 
 function affiche_select(name_equipe){ // permet le filtre par équipe
@@ -243,6 +246,9 @@ d3.json("bibtext_parsing/data.json", function(error, graph) { // debut de la con
               }
               if(d.group == "GOAL"){
                   return d3.rgb("Aqua");
+              }
+              if(d.group == "DRIM"){
+                  return d3.rgb("DarkGoldenrod");
               }
           return d3.rgb("orange");}
         })
