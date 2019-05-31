@@ -3,7 +3,7 @@ if (document.body)
 var width = (window.innerWidth);
 var height = (window.innerHeight);
 height = height - 200;
-width = width -536;
+width = width * 0.65;
 } 
 
 var auteur = "";
@@ -34,12 +34,31 @@ function recherche(nForm) { // fonction pour le bouton de recherche
 }
 
 function affiche_liste(){ // affiche la liste des articles écrits
+    document.getElementById('other').innerHTML = "";
+    let set_tab_article = new Set();
+    // const set1 = new Set([1, 2, 3, 4, 5]);
     d3.selectAll(".link[source='"+auteur_other+"']").attr("source",function(d){
-        document.getElementById('other').innerHTML = d.titles;
+        for(let i = 0 ; i < d.titles.length;i++){
+            set_tab_article.add(d.titles[i]);
+            // console.log(d.titles);
+        }
     })
     d3.selectAll(".link[target='"+auteur_other+"']").attr("source",function(d){
-        document.getElementById('other').innerHTML = d.titles;
+        for(let i = 0 ; i < d.titles.length;i++){
+            set_tab_article.add(d.titles[i]);
+        }
     })
+    console.log(set_tab_article);
+    for(let item of set_tab_article){
+        // console.log(item);
+        document.getElementById('other').innerHTML += "<tr>" + item + "</tr>" + "<br>";
+    }
+    // var tab = set_tab_article.entries();
+    // console.log(tab);
+    // for(let i = 0 ; i < tab.length;i++){
+    //     document.getElementById('other').innerHTML += "<tr>" + tab[i][0] + "</tr>";
+    // }
+    // document.getElementById('other').innerHTML = d.titles;
 }
 
 function select(name){
@@ -57,6 +76,33 @@ function select(name){
     }
     if(name == "DM2L"){
         affiche_select("DM2L");
+    }
+    if(name == "BD"){
+        affiche_select("BD");
+    }
+    if(name == "GOAL"){
+        affiche_select("GOAL");
+    }
+    if(name == "DRIM"){
+        affiche_select("DRIM");
+    }
+    if (name == "SOC"){
+        affiche_select("SOC");
+    }
+    if(name == "M2DisCo"){
+        affiche_select("M2DisCo");
+    }
+    if(name == "GeoMod"){
+        affiche_select("GeoMod");
+    }
+    if(name == "Beagle"){
+        affiche_select("Beagle");
+    }
+    if(name == "R3AM"){
+        affiche_select("R3AM");
+    }
+    if(name == "SAARA"){
+        affiche_select("SAARA");
     }
 }
 
@@ -205,7 +251,7 @@ d3.json("bibtext_parsing/data.json", function(error, graph) { // debut de la con
                   return d3.rgb("red");
               }
               if(d.group == "Tweak"){
-                  return d3.rgb("green");
+                  return d3.rgb("SeaGreen");
               }
               if(d.group == "IMAGINE"){
                   return d3.rgb("Magenta");
@@ -213,12 +259,39 @@ d3.json("bibtext_parsing/data.json", function(error, graph) { // debut de la con
               if(d.group == "DM2L"){
                   return d3.rgb("Sienna");
               }
+              if(d.group == "BD"){
+                  return d3.rgb("YellowGreen");
+              }
+              if(d.group == "GOAL"){
+                  return d3.rgb("Aqua");
+              }
+              if(d.group == "DRIM"){
+                  return d3.rgb("DarkGoldenrod");
+              }
+              if(d.group == "SOC"){
+                  return d3.rgb("SkyBlue");
+              }
+              if(d.group == "M2DisCo"){
+                  return d3.rgb("Yellow");
+              }
+              if(d.group == "GeoMod"){
+                  return d3.rgb("RosyBrown");
+              }
+              if(d.group == "Beagle"){
+                  return d3.rgb("MediumSlateBlue");
+              }
+              if(d.group == "R3AM"){
+                  return d3.rgb("Salmon");
+              }
+              if(d.group == "SAARA"){
+                  return d3.rgb("Teal");
+              }
           return d3.rgb("orange");}
         })
       .style("fill", function(d) { return d.id; })
       .attr("r",function(d){
           if(d.group != "no team"){
-            return 8;
+            return 10;
         }else{
             return 5;
           }
@@ -251,7 +324,7 @@ d3.json("bibtext_parsing/data.json", function(error, graph) { // debut de la con
               if(d.group == "no team"){
                   return 6;
               }else{
-                  return 8;
+                  return 10;
               }
           });
   }
