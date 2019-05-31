@@ -95,6 +95,9 @@ function select(name){
     if(name == "GeoMod"){
         affiche_select("GeoMod");
     }
+    if(name == "Beagle"){
+        affiche_select("Beagle");
+    }
 }
 
 function affiche_select(name_equipe){ // permet le filtre par équipe
@@ -267,6 +270,9 @@ d3.json("bibtext_parsing/data.json", function(error, graph) { // debut de la con
               }
               if(d.group == "GeoMod"){
                   return d3.rgb("RosyBrown");
+              }
+              if(d.group == "Beagle"){
+                  return d3.rgb("MediumSlateBlue");
               }
           return d3.rgb("orange");}
         })
