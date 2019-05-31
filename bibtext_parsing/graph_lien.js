@@ -101,6 +101,9 @@ function select(name){
     if(name == "R3AM"){
         affiche_select("R3AM");
     }
+    if(name == "SAARA"){
+        affiche_select("SAARA");
+    }
 }
 
 function affiche_select(name_equipe){ // permet le filtre par équipe
@@ -280,12 +283,15 @@ d3.json("bibtext_parsing/data.json", function(error, graph) { // debut de la con
               if(d.group == "R3AM"){
                   return d3.rgb("Salmon");
               }
+              if(d.group == "SAARA"){
+                  return d3.rgb("Teal");
+              }
           return d3.rgb("orange");}
         })
       .style("fill", function(d) { return d.id; })
       .attr("r",function(d){
           if(d.group != "no team"){
-            return 8;
+            return 10;
         }else{
             return 5;
           }
@@ -318,7 +324,7 @@ d3.json("bibtext_parsing/data.json", function(error, graph) { // debut de la con
               if(d.group == "no team"){
                   return 6;
               }else{
-                  return 8;
+                  return 10;
               }
           });
   }
