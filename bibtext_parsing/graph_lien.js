@@ -3,7 +3,7 @@ if (document.body)
 var width = (window.innerWidth);
 var height = (window.innerHeight);
 height = height - 200;
-width = width -536;
+width = width * 0.65;
 } 
 
 var auteur = "";
