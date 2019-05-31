@@ -98,6 +98,9 @@ function select(name){
     if(name == "Beagle"){
         affiche_select("Beagle");
     }
+    if(name == "R3AM"){
+        affiche_select("R3AM");
+    }
 }
 
 function affiche_select(name_equipe){ // permet le filtre par équipe
@@ -273,6 +276,9 @@ d3.json("bibtext_parsing/data.json", function(error, graph) { // debut de la con
               }
               if(d.group == "Beagle"){
                   return d3.rgb("MediumSlateBlue");
+              }
+              if(d.group == "R3AM"){
+                  return d3.rgb("Salmon");
               }
           return d3.rgb("orange");}
         })
