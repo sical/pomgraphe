@@ -34,7 +34,8 @@ function recherche(nForm) { // fonction pour le bouton de recherche
 }
 
 function affiche_liste(){ // affiche la liste des articles écrits
-    var set_tab_article = new Set();
+    document.getElementById('other').innerHTML = "";
+    let set_tab_article = new Set();
     // const set1 = new Set([1, 2, 3, 4, 5]);
     d3.selectAll(".link[source='"+auteur_other+"']").attr("source",function(d){
         for(let i = 0 ; i < d.titles.length;i++){
