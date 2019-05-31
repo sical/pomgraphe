@@ -80,6 +80,9 @@ function select(name){
     if(name == "BD"){
         affiche_select("BD");
     }
+    if(name == "GOAL"){
+        affiche_select("GOAL");
+    }
 }
 
 function affiche_select(name_equipe){ // permet le filtre par équipe
@@ -237,6 +240,9 @@ d3.json("bibtext_parsing/data.json", function(error, graph) { // debut de la con
               }
               if(d.group == "BD"){
                   return d3.rgb("YellowGreen");
+              }
+              if(d.group == "GOAL"){
+                  return d3.rgb("Aqua");
               }
           return d3.rgb("orange");}
         })
