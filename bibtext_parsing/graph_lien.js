@@ -34,12 +34,30 @@ function recherche(nForm) { // fonction pour le bouton de recherche
 }
 
 function affiche_liste(){ // affiche la liste des articles écrits
+    var set_tab_article = new Set();
+    // const set1 = new Set([1, 2, 3, 4, 5]);
     d3.selectAll(".link[source='"+auteur_other+"']").attr("source",function(d){
-        document.getElementById('other').innerHTML = d.titles;
+        for(let i = 0 ; i < d.titles.length;i++){
+            set_tab_article.add(d.titles[i]);
+            // console.log(d.titles);
+        }
     })
     d3.selectAll(".link[target='"+auteur_other+"']").attr("source",function(d){
-        document.getElementById('other').innerHTML = d.titles;
+        for(let i = 0 ; i < d.titles.length;i++){
+            set_tab_article.add(d.titles[i]);
+        }
     })
+    console.log(set_tab_article);
+    for(let item of set_tab_article){
+        // console.log(item);
+        document.getElementById('other').innerHTML += "<tr>" + item + "</tr>" + "<br>";
+    }
+    // var tab = set_tab_article.entries();
+    // console.log(tab);
+    // for(let i = 0 ; i < tab.length;i++){
+    //     document.getElementById('other').innerHTML += "<tr>" + tab[i][0] + "</tr>";
+    // }
+    // document.getElementById('other').innerHTML = d.titles;
 }
 
 function select(name){
