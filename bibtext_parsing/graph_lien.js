@@ -27,6 +27,7 @@ slider.oninput = function() {
 
 function recherche(nForm) { // fonction pour le bouton de recherche
     auteur = $('#auteur').val();
+    $('#auteur').css("display", "none");
     d3.selectAll(".node[name_node='"+auteur+"']").attr("class","node sel");
     d3.selectAll(".link[source='"+auteur+"']").attr("class","link link2").attr("opacity",1);
     d3.selectAll(".link[target='"+auteur+"']").attr("class","link link2").attr("opacity",1);
