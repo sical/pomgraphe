@@ -10,6 +10,9 @@ var auteur = "";
 var auteur_other ;
 var year ;
 var tab_auteur = [] ;
+var selected_dist = {};
+
+var to_select = new Set();
 
 var slider = document.getElementById("myRange");
 var output = document.getElementById("myRange");
@@ -229,6 +232,25 @@ d3.json("bibtext_parsing/data.json", function(error, graph) { // debut de la con
           document.getElementById('last_collaboration_click').innerHTML = d.lastColaboration;
           document.getElementById('team_clic').innerHTML = d.group;
           affiche_liste();
+          
+          to_select.add(d.id);
+
+          d3.selectAll(".link").filter(function(l){
+            if (to_select.has(l.source.id) | to_select.has(l.target.id)){
+                return true;
+            }
+          }).map(function(l){
+              for (let i = 0; i < l.length; i++){
+                if (to_select.has(l[i].__data__.source.id)){
+                    to_select.add(l[i].__data__.target.id);
+                } else {
+                    to_select.add(l[i].__data__.source.id);
+                }
+              }
+            
+          })
+          d3.selectAll(".node").filter(function(n){return to_select.has(n.id)}).attr("class","node sel");
+
       })
       .attr("fill",function(d){
           if(auteur == d.id){ 
