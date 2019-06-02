@@ -10,6 +10,9 @@ var auteur = "";
 var auteur_other ;
 var year ;
 var tab_auteur = [] ;
+var selected_dist = {};
+
+var to_select = new Set();
 
 var slider = document.getElementById("myRange");
 var output = document.getElementById("myRange");
@@ -27,6 +30,7 @@ slider.oninput = function() {
 
 function recherche(nForm) { // fonction pour le bouton de recherche
     auteur = $('#auteur').val();
+    //$('#auteur').css("display", "none");
     d3.selectAll(".node[name_node='"+auteur+"']").attr("class","node sel");
     d3.selectAll(".link[source='"+auteur+"']").attr("class","link link2").attr("opacity",1);
     d3.selectAll(".link[target='"+auteur+"']").attr("class","link link2").attr("opacity",1);
@@ -36,11 +40,9 @@ function recherche(nForm) { // fonction pour le bouton de recherche
 function affiche_liste(){ // affiche la liste des articles écrits
     document.getElementById('other').innerHTML = "";
     let set_tab_article = new Set();
-    // const set1 = new Set([1, 2, 3, 4, 5]);
     d3.selectAll(".link[source='"+auteur_other+"']").attr("source",function(d){
         for(let i = 0 ; i < d.titles.length;i++){
             set_tab_article.add(d.titles[i]);
-            // console.log(d.titles);
         }
     })
     d3.selectAll(".link[target='"+auteur_other+"']").attr("source",function(d){
@@ -48,17 +50,9 @@ function affiche_liste(){ // affiche la liste des articles écrits
             set_tab_article.add(d.titles[i]);
         }
     })
-    console.log(set_tab_article);
     for(let item of set_tab_article){
-        // console.log(item);
         document.getElementById('other').innerHTML += "<tr>" + item + "</tr>" + "<br>";
     }
-    // var tab = set_tab_article.entries();
-    // console.log(tab);
-    // for(let i = 0 ; i < tab.length;i++){
-    //     document.getElementById('other').innerHTML += "<tr>" + tab[i][0] + "</tr>";
-    // }
-    // document.getElementById('other').innerHTML = d.titles;
 }
 
 function select(name){
@@ -129,7 +123,6 @@ function affiche_select(name_equipe){ // permet le filtre par équipe
         }
         return tab;
     })[0]);
-    console.log(to_keep_link[0]);
     d3.selectAll(".node").filter(node => !to_keep_node.includes(node.id)).remove();
     d3.selectAll(".link").filter(function(link){
         for(var i = 0 ; i < to_keep_link.size();i++){
@@ -239,6 +232,25 @@ d3.json("bibtext_parsing/data.json", function(error, graph) { // debut de la con
           document.getElementById('last_collaboration_click').innerHTML = d.lastColaboration;
           document.getElementById('team_clic').innerHTML = d.group;
           affiche_liste();
+          
+          to_select.add(d.id);
+
+          d3.selectAll(".link").filter(function(l){
+            if (to_select.has(l.source.id) | to_select.has(l.target.id)){
+                return true;
+            }
+          }).map(function(l){
+              for (let i = 0; i < l.length; i++){
+                if (to_select.has(l[i].__data__.source.id)){
+                    to_select.add(l[i].__data__.target.id);
+                } else {
+                    to_select.add(l[i].__data__.source.id);
+                }
+              }
+            
+          })
+          d3.selectAll(".node").filter(function(n){return to_select.has(n.id)}).attr("class","node sel");
+
       })
       .attr("fill",function(d){
           if(auteur == d.id){ 
