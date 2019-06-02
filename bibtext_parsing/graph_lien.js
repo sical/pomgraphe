@@ -119,7 +119,6 @@ function affiche_select(name_equipe){ // permet le filtre par équipe
         }
         return tab;
     })[0]);
-    console.log(to_keep_link[0]);
     d3.selectAll(".node").filter(node => !to_keep_node.includes(node.id)).remove();
     d3.selectAll(".link").filter(function(link){
         for(var i = 0 ; i < to_keep_link.size();i++){
