@@ -24,6 +24,7 @@ slider.oninput = function() {
   force_2 = this.value;
   force.charge(force_2);
   force.start();
+
 } 
 
 
@@ -195,7 +196,7 @@ d3.json("bibtext_parsing/data.json", function(error, graph) { // debut de la con
   force
       .nodes(graph.nodes)
       .links(graph.links)
-      .start();
+      
 
   var link = svg.selectAll(".link")
       .data(graph.links)
@@ -325,8 +326,18 @@ d3.json("bibtext_parsing/data.json", function(error, graph) { // debut de la con
         .attr("y2", function(d) { return d.target.y; });
 
     node.attr("cx", function(d) { return d.x; })
-        .attr("cy", function(d) { return d.y; });
-    
+    .attr("cy", function(d) { return d.y; });
+
+
+    console.log('stqrting')
+
+   
+  force.start();
+  for (let i = 0; i<50; i++) {
+    force.tick(); 
+    console.log(i);
+  }
+  force.stop();
   });
 
   function mouseover() { // évenemtent pour la souris
