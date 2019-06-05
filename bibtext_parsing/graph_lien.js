@@ -27,7 +27,7 @@ slider.oninput = function() {
 
     setTimeout(function () {
         force.stop();
-    }, 10);
+    }, 50);
 } 
 
 function stopForce() {
@@ -324,8 +324,9 @@ d3.json("bibtext_parsing/data.json", function(error, graph) { // debut de la con
         }else{
             return 5;
           }
-      })
-      .call(force.drag);
+      });
+    //   .call(force.drag);
+    //suppression du drag sur le graph  
   node.append("title")
       .text(function (d) { return d.id;});
 
