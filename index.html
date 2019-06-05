@@ -26,6 +26,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
 
   </head>
 
@@ -59,7 +60,13 @@
 
       <div id='clear'>
         <input type="submit" value="clear" id='clear' onclick="document.location.reload(true)" class="btn btn-primary">
-      </div>  
+      </div>
+      <div id='goforce'>
+        <button type="button" class="btn btn-success" onclick="startForce()">launch force</button>
+      </div> 
+      <div id='stop'>
+        <button type="button" class="btn btn-danger" onclick="stopForce()">stop force</button>
+      </div> 
         <!-- Navbar Search -->
         <form action="#" class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0", name="auteur" , onSubmit="recherche(this)">
           <div class="input-group">
@@ -157,10 +164,8 @@
                   <div class="slidecontainer">
                     <h4>Force</h4>  <input type="range" min="-500" max="100" value="-90" class="slider" id="myRange">
                   </div>
-                  <!-- <div class="slidecontainer">
-                    <h4>Zoom</h4>  <input type="range" min="-200" max="100" value="-90" class="slider" id="zoom">
-                  </div> -->
                 </div>
+
                   <div class="container">
                       <script src="bibtext_parsing/graph_lien.js"></script>
                   <canvas id="myAreaChart" width="100%" height="30"></canvas>
