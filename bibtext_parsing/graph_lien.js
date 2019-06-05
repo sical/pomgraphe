@@ -24,8 +24,19 @@ slider.oninput = function() {
   force_2 = this.value;
   force.charge(force_2);
   force.start();
+
+    setTimeout(function () {
+        force.stop();
+    }, 10);
 } 
 
+function stopForce() {
+    force.stop();
+}
+
+function startForce(){
+    force.start();
+}
 
 
 function recherche(nForm) { // fonction pour le bouton de recherche
@@ -329,12 +340,18 @@ d3.json("bibtext_parsing/data.json", function(error, graph) { // debut de la con
     
   });
 
+
+  setTimeout(function () {
+    force.stop();
+}, 50);
+
+
   function mouseover() { // évenemtent pour la souris
       d3.select(this).transition()
           .duration(750)
           .attr("r",15);
   }
-//6
+
   function mouseout() {
       d3.select(this).transition()
           .duration(750)
